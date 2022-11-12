@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('sprites', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pokemon_id')->constrained('pokemons');
+            $table->foreignId('pokemon_id')->constrained();
             $table->string('key');
             $table->string('url')->nullable();
             $table->timestamps();

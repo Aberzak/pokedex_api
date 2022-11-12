@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('team_pokemons', function (Blueprint $table) {
             $table->id();
             $table->foreignId('team_id')->constrained();
-            $table->foreignId('pokemon_id')->constrained('pokemons');
+            $table->foreignId('pokemon_id')->constrained();
             $table->timestamps();
         });
     }

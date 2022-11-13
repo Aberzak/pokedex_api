@@ -2,9 +2,10 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Stat;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PokemonResource extends JsonResource
+class StatResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +16,9 @@ class PokemonResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'sprites' => SpriteResource::collection($this->whenLoaded('sprites'))->where('key','front_default'),
-            'types' => PokemonTypeResource::collection($this->whenLoaded('types'))
+            'stat' => Stat::find($this->stat_id)->name,
+            'base_stat' => $this->base_stat,
+            'effort' => $this->effort
         ];
     }
 }

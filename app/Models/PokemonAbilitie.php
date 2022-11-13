@@ -5,8 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PokemonTypes extends Model
+class PokemonAbilitie extends Model
 {
     use HasFactory;
-
+    protected $casts = [
+        'is_hidden' => 'boolean',
+    ];
 }

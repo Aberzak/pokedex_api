@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\V1\PokemonCollection;
-use App\Http\Resources\V1\PokemonResource;
+use App\Http\Resources\V1\PokemonDetailResource;
 use Illuminate\Http\Request;
 use App\Models\Pokemon;
 
@@ -17,7 +17,7 @@ class PokemonController extends Controller
      */
     public function index()
     {
-        $pokemons = Pokemon::with('spriteDefault','types')->get();
+        $pokemons = Pokemon::with('sprites','types','moves','stats','abilities')->get();
         
         return new PokemonCollection( $pokemons );
     }
@@ -40,7 +40,6 @@ class PokemonController extends Controller
      */
     public function show(Pokemon $pokemon)
     {
-        
-        return new PokemonResource($pokemon->loadMissing('spriteDefault','types'));
+        return new PokemonDetailResource($pokemon->loadMissing('sprites','types','moves','stats','abilities'));
     }
 }

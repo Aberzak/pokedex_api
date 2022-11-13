@@ -4,7 +4,7 @@ namespace App\Http\Resources\V1;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PokemonResource extends JsonResource
+class MoveResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -14,11 +14,6 @@ class PokemonResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'sprites' => SpriteResource::collection($this->whenLoaded('sprites'))->where('key','front_default'),
-            'types' => PokemonTypeResource::collection($this->whenLoaded('types'))
-        ];
+        return $this->name;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources\V1;
 
+use App\Models\Move;
+use App\Models\VersionGroupDetail;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PokemonResource extends JsonResource
+class PokemonMoveResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,10 +17,8 @@ class PokemonResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'=> $this->id,
-            'name'=> $this->name,
-            'sprites' => SpriteResource::collection($this->whenLoaded('sprites'))->where('key','front_default'),
-            'types' => PokemonTypeResource::collection($this->whenLoaded('types'))
+            'move' => new MoveResource(Move::find($this->move_id)),
+            'version_group_details' => new VersionGroupDetailResource(VersionGroupDetail::find($this->version_group_detail_id)),
         ];
     }
 }

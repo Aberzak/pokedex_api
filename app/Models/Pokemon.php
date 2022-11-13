@@ -19,13 +19,23 @@ class Pokemon extends Model
         return $this->hasMany(Sprite::class);
     }
 
-    public function spriteDefault()
-    {
-        return $this->hasMany(Sprite::class)->where('key','front_default');
-    }
-
     public function types()
     {
-        return $this->hasMany(PokemonTypes::class);
+        return $this->hasMany(PokemonType::class);
+    }
+
+    public function moves()
+    {
+        return $this->hasMany(PokemonMove::class);
+    }
+
+    public function stats()
+    {
+        return $this->hasMany(PokemonStat::class);
+    }
+
+    public function abilities()
+    {
+        return $this->hasMany(PokemonAbilitie::class);
     }
 }

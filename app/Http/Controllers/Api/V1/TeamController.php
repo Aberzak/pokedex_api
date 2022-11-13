@@ -18,7 +18,8 @@ class TeamController extends Controller
      */
     public function index()
     {
-        return new TeamCollection( Team::all());
+
+        return new TeamCollection( Team::with('pokemons')->get());
     }
 
     /**
@@ -39,7 +40,7 @@ class TeamController extends Controller
      */
     public function show(Team $team)
     {
-        return new TeamResource($team);
+        return new TeamCollection( Team::with('pokemons')->get());
     }
 
     /**

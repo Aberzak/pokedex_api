@@ -14,10 +14,12 @@ class TeamResource extends JsonResource
      */
     public function toArray($request)
     {
+        $pokemons = $this->whenLoaded('pokemons');
+
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'pokemons' => $this->whenLoaded('pokemons')->pluck('pokemon_id')
+            'pokemons' => $pokemons->isNotEmpty() ? $pokemons->pluck('pokemon_id') : 'This team is empty'
         ];
     }
 }

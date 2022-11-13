@@ -21,6 +21,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['prefix' => 'v1', 'namespace'=>'App\Http\Controllers\Api\V1'],function(){
-    Route::apiResource('pokemons', PokemonController::class);
-    Route::apiResource('teams', TeamController::class);
+    Route::get('pokemons', [PokemonController::class, 'index']);
+    Route::get('pokemons/{pokemon}', [PokemonController::class, 'show']);
+    Route::apiResource('teams', TeamController::class)->only([
+        'index','store'
+    ]);
+    Route::get('teams/{team}', [TeamController::class,'show']);
+    Route::post('teams/{team}', [TeamController::class,'storeTeamPokemon']);
 });

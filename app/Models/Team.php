@@ -11,12 +11,10 @@ class Team extends Model
 
     protected $fillable = [
         'name',
-
     ];
 
     public function pokemons()
     {
-
         return $this->hasMany(TeamPokemon::class);
     } 
 }

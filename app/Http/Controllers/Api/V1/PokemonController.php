@@ -7,6 +7,7 @@ use App\Http\Resources\V1\PokemonCollection;
 use App\Http\Resources\V1\PokemonDetailResource;
 use Illuminate\Http\Request;
 use App\Models\Pokemon;
+use Illuminate\Validation\Rule;
 
 class PokemonController extends Controller
 {
@@ -15,9 +16,23 @@ class PokemonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pokemons = Pokemon::with('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities')->get();
+        $request->validate([
+            'sort' =>['string',Rule::in(['name-asc','name-desc','id-asc','id-desc'])],
+        ]);
+
+        if($request->filled('sort')){
+            $orderkey = explode('-',$request->query('sort'));
+        }
+
+        $pokemons = Pokemon::with('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities');
+
+        if(isset($orderkey)){
+            $pokemons = $pokemons->orderby($orderkey[0],$orderkey[1]);
+        }
+          
+        $pokemons = $pokemons->get();
         
         return new PokemonCollection( $pokemons );
     }
@@ -40,7 +55,7 @@ class PokemonController extends Controller
      */
     public function show(Pokemon $pokemon)
     {
-        return new PokemonDetailResource($pokemon->loadMissing('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities'));
+        return new PokemonDetailResource($pokemon->loadMissing('sprites','types','moves','stats','abilities'));
     }
 
     /**
@@ -50,17 +65,32 @@ class PokemonController extends Controller
      */
     public function search(Request $request)
     {
+        $request->validate([
+            'query' =>['required','string','max:25'],
+            'limit' =>['integer']
+        ]);
+
         $key = $request->query('query');
         $limit = $request->query('limit');
 
-        $pokemons = Pokemon::with('sprites','pokemonTypes')
-                    ->whereHas('pokemonTypes', function($q) use($key){
-                        $q->whereHas('Type',function($q2) use($key){
-                            $q2->where('name','LIKE','%'.$key.'%');
-                        });
-                    })
-                    ->get();
-    
-        return new PokemonCollection( $pokemons );
+        if(isset($key)){
+            $pokemons = Pokemon::with('sprites','pokemonTypes')
+                        ->whereHas('pokemonTypes', function($q) use($key){
+                            $q->whereHas('Type',function($q2) use($key){
+                                $q2->where('name','LIKE','%'.$key.'%');
+                            });
+                        })->orWhere('name','LIKE','%'.$key.'%');
+            
+            if(isset($limit) && $limit>0){
+                $pokemons->take($limit);
+            }
+                        
+
+            $pokemons = $pokemons->get();
+
+            return new PokemonCollection( $pokemons );
+        }
+
+        return false;
     }
 }

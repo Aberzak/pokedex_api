@@ -17,7 +17,7 @@ class PokemonController extends Controller
      */
     public function index()
     {
-        $pokemons = Pokemon::with('sprites','types','moves','stats','abilities')->get();
+        $pokemons = Pokemon::with('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities')->get();
         
         return new PokemonCollection( $pokemons );
     }
@@ -40,6 +40,27 @@ class PokemonController extends Controller
      */
     public function show(Pokemon $pokemon)
     {
-        return new PokemonDetailResource($pokemon->loadMissing('sprites','types','moves','stats','abilities'));
+        return new PokemonDetailResource($pokemon->loadMissing('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities'));
+    }
+
+    /**
+     * Display a listing of Pokemon with queryfilter.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search(Request $request)
+    {
+        $key = $request->query('query');
+        $limit = $request->query('limit');
+
+        $pokemons = Pokemon::with('sprites','pokemonTypes')
+                    ->whereHas('pokemonTypes', function($q) use($key){
+                        $q->whereHas('Type',function($q2) use($key){
+                            $q2->where('name','LIKE','%'.$key.'%');
+                        });
+                    })
+                    ->get();
+    
+        return new PokemonCollection( $pokemons );
     }
 }

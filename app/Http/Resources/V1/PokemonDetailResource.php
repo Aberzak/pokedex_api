@@ -18,14 +18,14 @@ class PokemonDetailResource extends JsonResource
             'id'=> $this->id,
             'name'=> $this->name,
             'sprites' => SpriteResource::collection($this->whenLoaded('sprites')),
-            'types' => PokemonTypeResource::collection($this->whenLoaded('types')),
+            'types' => PokemonTypeResource::collection($this->whenLoaded('pokemonAbilities')),
             'height' => $this->height,
             'weight' => $this->weight,
-            //'moves' => PokemonMoveResource::collection($this->whenLoaded('moves')),
+            'moves' => PokemonMoveResource::collection($this->whenLoaded('pokemonMoves')),
             'order' => $this->order,
             'species' => $this->species,
-            'stats' => StatResource::collection($this->whenLoaded('stats')),
-            'abilities' => AbilitieResource::collection($this->whenLoaded('abilities')),
+            'stats' => StatResource::collection($this->whenLoaded('pokemonStats')),
+            'abilities' => AbilitieResource::collection($this->whenLoaded('pokemonAbilities')),
             'form' => $this->form
         ];
     }

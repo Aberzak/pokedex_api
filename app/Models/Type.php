@@ -11,6 +11,6 @@ class Type extends Model
 
     public function pokemonType()
     {
-        return $this->belongsTo(PokemonTypes::class);
+        return $this->hasOne(PokemonTypes::class,'type_id');
     }
 }

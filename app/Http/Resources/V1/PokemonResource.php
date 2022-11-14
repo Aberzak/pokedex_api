@@ -18,7 +18,7 @@ class PokemonResource extends JsonResource
             'id'=> $this->id,
             'name'=> $this->name,
             'sprites' => SpriteResource::collection($this->whenLoaded('sprites'))->where('key','front_default'),
-            'types' => PokemonTypeResource::collection($this->whenLoaded('types'))
+            'types' => PokemonTypeResource::collection($this->whenLoaded('pokemonTypes'))
         ];
     }
 }

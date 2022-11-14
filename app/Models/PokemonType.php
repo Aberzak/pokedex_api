@@ -9,4 +9,13 @@ class PokemonType extends Model
 {
     use HasFactory;
 
+    public function pokemon()
+    {
+        return $this->belongsTo(Pokemon::class);
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(Type::class);
+    }
 }

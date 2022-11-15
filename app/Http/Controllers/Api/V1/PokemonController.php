@@ -45,7 +45,7 @@ class PokemonController extends Controller
      */
     public function show(Pokemon $pokemon)
     {
-        return new PokemonDetailResource($pokemon->loadMissing('sprites','types','moves','stats','abilities'));
+        return new PokemonDetailResource($pokemon->loadMissing('sprites','pokemonTypes','pokemonMoves','pokemonStats','pokemonAbilities'));
     }
 
     /**

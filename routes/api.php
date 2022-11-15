@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\PokemonController;
 use App\Http\Controllers\Api\V1\TeamController;
+use App\Http\Controllers\Api\V2\PokemonController as PokemonControllerV2;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,3 +32,5 @@ Route::group(['prefix' => 'v1', 'namespace'=>'App\Http\Controllers\Api\V1'],func
 
     Route::get('search', [PokemonController::class, 'search']);
 });
+
+Route::get('v2/pokemons',[PokemonControllerV2::class,'index']);

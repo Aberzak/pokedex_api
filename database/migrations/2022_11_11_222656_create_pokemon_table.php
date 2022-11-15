@@ -21,6 +21,8 @@ return new class extends Migration
             $table->integer('order');
             $table->string('form');
             $table->timestamps();
+
+            $table->unique(('name'));
         });
     }
 

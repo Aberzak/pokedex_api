@@ -67,7 +67,7 @@ class PokemonController extends Controller
     {
         $request->validate([
             'query' =>['required','string','max:25'],
-            'limit' =>['integer']
+            'limit' =>['numeric']
         ]);
 
         $key = $request->query('query');

@@ -38,16 +38,6 @@ class PokemonController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @param  \App\Models\Pokemon  $pokemon
@@ -67,7 +57,7 @@ class PokemonController extends Controller
     {
         $request->validate([
             'query' =>['required','string','max:25'],
-            'limit' =>['integer']
+            'limit' =>['numeric']
         ]);
 
         $key = $request->query('query');

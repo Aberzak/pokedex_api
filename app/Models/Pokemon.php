@@ -9,11 +9,6 @@ class Pokemon extends Model
 {
     use HasFactory;
 
-    public function data()
-    {
-        $this->sprites();
-    }
-
     public function sprites()
     {
         return $this->hasMany(Sprite::class);

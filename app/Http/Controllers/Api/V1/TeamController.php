@@ -75,7 +75,7 @@ class TeamController extends Controller
 
         Validator::make($request->all() , [
             'pokemons' => ['required','array','max:'. 6-$teamPokemonsCount],
-            'pokemons.*'=>['integer',Rule::in(Pokemon::all()->pluck('id')),Rule::notIn($teamPokemonsIds),'distinct'],
+            'pokemons.*'=>['numeric',Rule::in(Pokemon::all()->pluck('id')),Rule::notIn($teamPokemonsIds),'distinct'],
         ])->validate();
 
         foreach($request->pokemons as $pokemonId){

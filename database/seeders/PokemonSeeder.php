@@ -6,6 +6,10 @@ use App\Models\Abilitie;
 use App\Models\Move;
 use App\Models\MoveLearnMethod;
 use App\Models\Pokemon;
+use App\Models\PokemonAbilitie;
+use App\Models\PokemonMove;
+use App\Models\PokemonStat;
+use App\Models\PokemonType;
 use App\Models\Sprite;
 use App\Models\Stat;
 use App\Models\Type;
@@ -47,12 +51,11 @@ class PokemonSeeder extends Seeder
                     'form' => $pokemonData['forms'][0]['url']
                 ]
                 );
-
-         /*   
+   
             foreach ($pokemonData['abilities'] as $abilitieData){
 
                 if (!isset($abilities[$abilitieData['ability']['name']])){
-                    $ability = Abilitie::Create(
+                    $ability = Abilitie::firstOrCreate(
                         ['name' => $abilitieData['ability']['name'],
                         'url' => $abilitieData['ability']['url']]
                     );
@@ -63,7 +66,7 @@ class PokemonSeeder extends Seeder
                 
                 }
 
-                DB::table('pokemon_abilities')->insert([
+                PokemonAbilitie::firstOrCreate([
                     'pokemon_id' => $pokemon->id,
                     'slot' => $abilitieData['slot'],
                     'is_hidden' => $abilitieData['is_hidden'],
@@ -73,7 +76,7 @@ class PokemonSeeder extends Seeder
                    
            foreach ($pokemonData['moves'] as $moveData){
              if (!isset($moves[$moveData['move']['name']])){
-                $move = Move::Create(
+                $move = Move::firstOrCreate(
                     ['name' => $moveData['move']['name'],
                     'url' => $moveData['move']['url']]
                 );
@@ -86,7 +89,7 @@ class PokemonSeeder extends Seeder
 
                 foreach($moveData['version_group_details'] as $details){
                     if (!isset($moveLearnMethods[$details['move_learn_method']['name']])){
-                        $moveLearnMethod = MoveLearnMethod::Create(
+                        $moveLearnMethod = MoveLearnMethod::firstOrCreate(
                             ['name' => $details['move_learn_method']['name'],
                             'url' => $details['move_learn_method']['url']]
                         );
@@ -96,7 +99,7 @@ class PokemonSeeder extends Seeder
                     }
 
                     if (!isset($versionGroups[$details['version_group']['name']])){
-                        $versionGroup = VersionGroup::Create(
+                        $versionGroup = VersionGroup::firstOrCreate(
                             ['name' => $details['version_group']['name'],
                             'url' => $details['version_group']['url']]
                         );
@@ -111,7 +114,7 @@ class PokemonSeeder extends Seeder
                         'version_group_id' => $versionGroup->id
                     ]);
 
-                    DB::table('pokemon_moves')->insert([
+                    PokemonMove::firstOrCreate([
                         'pokemon_id' => $pokemon->id,
                         'move_id' => $move->id,
                         'version_group_detail_id' => $versionGroupdetail->id
@@ -133,7 +136,7 @@ class PokemonSeeder extends Seeder
 
             foreach ($pokemonData['types'] as $typeData){
                 if(!isset($types[$typeData['type']['name']])){
-                    $type = Type::Create(
+                    $type = Type::firstOrCreate(
                         ['name' => $typeData['type']['name'],
                         'url' => $typeData['type']['url']]
                     );
@@ -143,16 +146,16 @@ class PokemonSeeder extends Seeder
                 }
                 
 
-                DB::table('pokemon_types')->insert([
+                PokemonType::firstOrCreate([
                     'pokemon_id' => $pokemon->id,
                     'slot' => $typeData['slot'],
                     'type_id' => $type->id
                 ]);
-            }*/
+            }
 
             foreach ($pokemonData['stats'] as $statData){
                 if(!isset($stats[$statData['stat']['name']])){
-                    $stat = Stat::Create(
+                    $stat = Stat::firstOrCreate(
                         ['name' => $statData['stat']['name'],
                         'url' => $statData['stat']['url']]
                     );
@@ -161,13 +164,13 @@ class PokemonSeeder extends Seeder
                     $stat = $stats[$statData['stat']['name']];
                 }
                 
-
-                DB::table('pokemon_stats')->insert([
-                    'pokemon_id' => $pokemon->id,
-                    'base_stat' => $statData['base_stat'],
-                    'effort' => $statData['effort'],
-                    'stat_id' => $stat->id
+                PokemonStat::firstOrCreate([
+                        'pokemon_id' => $pokemon->id,
+                        'base_stat' => $statData['base_stat'],
+                        'effort' => $statData['effort'],
+                        'stat_id' => $stat->id
                 ]);
+
             }
         }
     }

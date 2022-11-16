@@ -56,11 +56,17 @@
             <ul class="ak-ul" data-indent-level="2">
                <li>
                   <p data-renderer-start-pos="1378">You may need to transform this data before importing it into your database.</p>
+               </li>  
+               <li>
+                  <p data-renderer-start-pos="1378">Command to be used : "php artisan pokemon:local" </p>
                </li>
             </ul>
          </li>
          <li>
             <p data-renderer-start-pos="1459">Provide a command to import a Pokémon from an external service (see <a href="https://pokeapi.co/docs/v2#pokemon" title="https://pokeapi.co/docs/v2#pokemon" data-renderer-mark="true" class="css-tgpl01">docs</a>), given an external ID or name as parameter.</p>
+         </li>
+         <li>
+            <p data-renderer-start-pos="1378">Command to be used : "php artisan pokemon:online {pokemon}"</p>
          </li>
       </ul>
       <h3 id="Nice-to-have" data-renderer-start-pos="1580">

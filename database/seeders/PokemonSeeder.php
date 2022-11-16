@@ -15,9 +15,7 @@ use App\Models\Stat;
 use App\Models\Type;
 use App\Models\VersionGroup;
 use App\Models\VersionGroupDetail;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PokemonSeeder extends Seeder
@@ -74,7 +72,7 @@ class PokemonSeeder extends Seeder
                 ]);
             }
                    
-           foreach ($pokemonData['moves'] as $moveData){
+            foreach ($pokemonData['moves'] as $moveData){
              if (!isset($moves[$moveData['move']['name']])){
                 $move = Move::firstOrCreate(
                     ['name' => $moveData['move']['name'],

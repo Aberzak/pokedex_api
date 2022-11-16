@@ -9,6 +9,8 @@ class Pokemon extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
+
     public function sprites()
     {
         return $this->hasMany(Sprite::class);

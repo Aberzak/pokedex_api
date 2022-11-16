@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Sprite extends Model
 {
     use HasFactory;
+    
+    protected $guarded = ['id'];
 }
